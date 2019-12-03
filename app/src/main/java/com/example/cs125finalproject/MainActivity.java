@@ -64,4 +64,8 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    private String testImageWithApi() {
+        return (WebAPI.uploadImageToAPI("https://stark-beach-10531.herokuapp.com/upload/", "/storage/emulated/0/Download/766.jpg"));
+    }
+
 }

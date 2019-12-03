@@ -1,10 +1,16 @@
 package com.example.cs125finalproject;
 
+import android.util.Log;
+import android.view.textclassifier.TextLinks;
+import android.widget.Toast;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -16,6 +22,10 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.charset.Charset;
 import java.util.Arrays;
+import com.loopj.android.http.*;
+
+import cz.msebera.android.httpclient.Header;
+
 
 public class WebAPI {
 
@@ -67,42 +77,35 @@ public class WebAPI {
         }
     }
 
-    public static void POSTRequest(String url, String params) throws IOException {
-
-        final String POST_PARAMS = params;
-
-        System.out.println(POST_PARAMS);
-        URL obj = new URL(url);
-
-        HttpURLConnection postConnection = (HttpURLConnection) obj.openConnection();
-        postConnection.setRequestMethod("POST");
-        postConnection.setRequestProperty("userId", "a1bcdefgh");
-        postConnection.setRequestProperty("Content-Type", "application/json");
-        postConnection.setDoOutput(true);
-
-        OutputStream os = postConnection.getOutputStream();
-        os.write(POST_PARAMS.getBytes());
-        os.flush();
-        os.close();
-
-        int responseCode = postConnection.getResponseCode();
-
-        System.out.println("POST Response Code :  " + responseCode);
-        System.out.println("POST Response Message : " + postConnection.getResponseMessage());
-
-        if (responseCode == HttpURLConnection.HTTP_CREATED) { //success
-            BufferedReader in = new BufferedReader(new InputStreamReader(
-                    postConnection.getInputStream()));
-            String inputLine;
-            StringBuffer response = new StringBuffer();
-            while ((inputLine = in .readLine()) != null) {
-                response.append(inputLine);
-            } in .close();
-            // print result
-            System.out.println(response.toString());
-        } else {
-            System.out.println("POST DIDN'T WORK");
+    public static String uploadImageToAPI(String url, String filepath) {
+        SyncHttpClient client = new SyncHttpClient();
+        RequestParams params = new RequestParams();
+        final String[] response = {""};
+        try {
+            params.put("file", new File(filepath));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
         }
+
+        client.post(url, params, new TextHttpResponseHandler() {
+            @Override
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.i("msg", responseString);
+                response[0] = responseString;
+            }
+
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                try {
+                    JSONObject j = new JSONObject(responseString);
+                    Log.i("msg", j.toString());
+                    response[0] = responseString;
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+        return response[0];
     }
 
 }

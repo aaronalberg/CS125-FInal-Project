@@ -5,11 +5,12 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.example.cs125finalproject"
-        minSdkVersion 23
+        minSdkVersion 14
         targetSdkVersion 28
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
     }
     buildTypes {
         release {
@@ -19,6 +20,7 @@ android {
     }
     compileOptions {
         sourceCompatibility = 1.8
+        targetCompatibility = 1.8
     }
 }
 

@@ -50,12 +50,21 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.CAMERA}, 1);
         }
+
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
+        Button testBtn = findViewById(R.id.testBtn);
+        testBtn.setOnClickListener(unused -> gooo());
 
+    }
+
+    public void gooo() {
+        Intent goToRecipes = new Intent(this, Recipes.class);
+        goToRecipes.putExtra("currentPhotoPath", currentPhotoPath);
+        startActivity(goToRecipes);
     }
 /*
     @Override
@@ -96,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
                         photoFile);
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
                 startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+
             }
         }
     }

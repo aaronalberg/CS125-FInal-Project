@@ -4,10 +4,12 @@ import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
@@ -58,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
         }
         Button useButton = findViewById(R.id.useButton);
         useButton.setOnClickListener(unused -> gooo());
+        useButton.setVisibility(View.GONE);
 
     }
 
@@ -70,14 +73,13 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            //File img = new File(currentPhotoPath);
+            Bitmap imageBitmap = BitmapFactory.decodeFile(currentPhotoPath);
             ImageView thumbnailView = findViewById(R.id.thumbnailView);
             thumbnailView.setImageBitmap(imageBitmap);
-
-
-
-
+            Button useButton = findViewById(R.id.useButton);
+            useButton.setOnClickListener(unused -> gooo());
+            useButton.setVisibility(View.VISIBLE);
         }
     }
 
@@ -122,12 +124,6 @@ public class MainActivity extends AppCompatActivity {
         // Save a file: path for use with ACTION_VIEW intents
         currentPhotoPath = image.getAbsolutePath();
         return image;
-    }
-
-
-
-    private String testImageWithApi() {
-        return (WebAPI.uploadImageToAPI("https://stark-beach-10531.herokuapp.com/upload/", "/storage/emulated/0/Download/766.jpg"));
     }
 
 }

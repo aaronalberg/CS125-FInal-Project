@@ -31,6 +31,8 @@ import cz.msebera.android.httpclient.Header;
 
 public class WebAPI {
 
+    private static JSONObject response;
+
 
     private static String readAll(Reader rd) throws IOException {
     StringBuilder sb = new StringBuilder();
@@ -79,42 +81,36 @@ public class WebAPI {
         }
     }
 
-    public static String uploadImageToAPI(String url, String filepath) {
+    public static JSONObject uploadImageToAPI(String url, String filepath) throws FileNotFoundException {
         SyncHttpClient client = new SyncHttpClient();
         RequestParams params = new RequestParams();
-        final String[] response = {""};
-        try {
-            params.put("file", new File(filepath));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        AsyncTask.execute(new Runnable() {
+        params.put("file", new File(filepath));
+
+        client.post(url, params, new TextHttpResponseHandler() {
             @Override
-            public void run() {
-                //TODO your background code
-                client.post(url, params, new TextHttpResponseHandler() {
-                    @Override
-                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                        Log.i("msg", responseString);
-                        response[0] = responseString;
-                        System.out.println("hereere");
-                    }
+            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                Log.i("msg", responseString);
+                try {
+                    response = new JSONObject(responseString);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("hereere");
 
-                    @Override
-                    public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                        try {
-                            JSONObject j = new JSONObject(responseString);
-                            Log.i("msg", j.toString());
-                            response[0] = responseString;
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
             }
-        });
 
-        return response[0];
+            @Override
+            public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                try {
+                    response = new JSONObject(responseString);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                System.out.println("blahahahah");
+            }
+
+            });
+        return response;
     }
 
 }

@@ -26,8 +26,8 @@ public class Recipes extends Activity {
 
     public void generateRecipes() {
         Intent current = getIntent();
-        //WebAPI.uploadImageToAPI("https://stark-beach-10531.herokuapp.com/upload/",
-           //     current.getStringExtra("currentPhotoPath"));
+        WebAPI.uploadImageToAPI("https://stark-beach-10531.herokuapp.com/upload/",
+                current.getStringExtra("currentPhotoPath"));
         ImageView tester = findViewById(R.id.tester);
         Bitmap myBitmap = BitmapFactory.decodeFile(current.getStringExtra("currentPhotoPath"));
         tester.setImageBitmap(myBitmap);

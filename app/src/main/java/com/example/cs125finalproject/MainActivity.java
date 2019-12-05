@@ -56,8 +56,8 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
-        Button testBtn = findViewById(R.id.testBtn);
-        testBtn.setOnClickListener(unused -> gooo());
+        Button useButton = findViewById(R.id.useButton);
+        useButton.setOnClickListener(unused -> gooo());
 
     }
 
@@ -66,16 +66,14 @@ public class MainActivity extends AppCompatActivity {
         goToRecipes.putExtra("currentPhotoPath", currentPhotoPath);
         startActivity(goToRecipes);
     }
-/*
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
             Bitmap imageBitmap = (Bitmap) extras.get("data");
-            /*
-            //use to set image as an image view by user, otherwise use imageBitmap elsewhere
-            ImageView imageView = findViewById(R.id.imageView);
-            imageView.setImageBitmap(imageBitmap);
+            ImageView thumbnailView = findViewById(R.id.thumbnailView);
+            thumbnailView.setImageBitmap(imageBitmap);
 
 
 
@@ -83,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
- */
+
 
 
     private void dispatchTakePictureIntent() {

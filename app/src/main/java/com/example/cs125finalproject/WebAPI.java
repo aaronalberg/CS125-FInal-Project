@@ -1,5 +1,6 @@
 package com.example.cs125finalproject;
 
+import android.os.AsyncTask;
 import android.util.Log;
 import android.view.textclassifier.TextLinks;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ import java.net.URLConnection;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import com.loopj.android.http.*;
+
 
 import cz.msebera.android.httpclient.Header;
 
@@ -86,25 +88,32 @@ public class WebAPI {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-
-        client.post(url, params, new TextHttpResponseHandler() {
+        AsyncTask.execute(new Runnable() {
             @Override
-            public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
-                Log.i("msg", responseString);
-                response[0] = responseString;
-            }
+            public void run() {
+                //TODO your background code
+                client.post(url, params, new TextHttpResponseHandler() {
+                    @Override
+                    public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
+                        Log.i("msg", responseString);
+                        response[0] = responseString;
+                        System.out.println("hereere");
+                    }
 
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, String responseString) {
-                try {
-                    JSONObject j = new JSONObject(responseString);
-                    Log.i("msg", j.toString());
-                    response[0] = responseString;
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
+                    @Override
+                    public void onSuccess(int statusCode, Header[] headers, String responseString) {
+                        try {
+                            JSONObject j = new JSONObject(responseString);
+                            Log.i("msg", j.toString());
+                            response[0] = responseString;
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
             }
         });
+
         return response[0];
     }
 

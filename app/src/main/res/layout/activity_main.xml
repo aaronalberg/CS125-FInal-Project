@@ -11,14 +11,14 @@
         android:id="@+id/thumbnailView"
         android:layout_width="300dp"
         android:layout_height="300dp"
-        android:background="#2D2A2A"
+        android:background="#FFF"
         android:contentDescription="@string/picture_of_fridge"
         app:layout_constraintBottom_toTopOf="@+id/constraintLayout0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@android:drawable/ic_menu_camera" />
+        app:srcCompat="@drawable/ic_cam3" />
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/constraintLayout0"

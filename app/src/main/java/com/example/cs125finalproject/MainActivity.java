@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -61,8 +62,8 @@ public class MainActivity extends AppCompatActivity {
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
         Button useButton = findViewById(R.id.useButton);
-        useButton.setOnClickListener(unused -> gooo());
-        useButton.setVisibility(View.GONE);
+        useButton.setBackgroundColor(Color.parseColor("#C2BFBF"));
+
 
     }
 
@@ -83,7 +84,8 @@ public class MainActivity extends AppCompatActivity {
             openCameraButton.setText("Take Photo Again");
             Button useButton = findViewById(R.id.useButton);
             useButton.setOnClickListener(unused -> gooo());
-            useButton.setVisibility(View.VISIBLE);
+            useButton.setBackgroundColor(Color.parseColor("#991A22"));
+
         }
     }
 

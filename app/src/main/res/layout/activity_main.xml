@@ -7,60 +7,72 @@
     android:layout_height="match_parent"
     android:paddingTop="?attr/actionBarSize">
 
-    <TextView
-        android:id="@+id/instructionLabel"
-        android:layout_width="348dp"
-        android:layout_height="125dp"
-        android:text="@string/to_start_take_a_picture_below"
-        android:textSize="30sp"
+    <ImageView
+        android:id="@+id/thumbnailView"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:background="#000"
+        android:contentDescription="@string/picture_of_fridge"
+        app:layout_constraintBottom_toTopOf="@+id/constraintLayout0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@android:drawable/ic_menu_camera" />
 
-    <LinearLayout
-        android:id="@+id/linearLayout"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout0"
         android:layout_width="match_parent"
-        android:layout_height="490dp"
-        android:orientation="horizontal"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toTopOf="@id/constraintLayout1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/instructionLabel">
+        app:layout_constraintTop_toBottomOf="@id/thumbnailView">
 
         <Button
             android:id="@+id/openCameraButton"
-            android:layout_width="120dp"
+            android:layout_width="match_parent"
             android:layout_height="120dp"
-            android:layout_alignParentBottom="true"
+            android:layout_weight=".3"
             android:background="@color/colorPrimary"
             android:minWidth="0dp"
             android:minHeight="0dp"
             android:text="@string/string_take_a_picture"
-            android:textColor="#FFFFFF" />
+            android:textColor="#FFFFFF"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
 
-        <ImageView
-            android:id="@+id/thumbnailView"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:background="#000"
-            android:contentDescription="@string/picture_of_fridge"
-            app:srcCompat="@android:drawable/ic_menu_camera" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <Button
-            android:id="@+id/useButton"
-            android:layout_width="0dp"
-            android:layout_height="120dp"
-            android:layout_weight="1"
-            android:background="@color/colorPrimary"
-            android:text="@string/use_this_photo"
-            android:textColor="#FFFFFF" />
-
-    </LinearLayout>
-
-    <LinearLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/constraintLayout1"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="horizontal"
-        tools:layout_editor_absoluteY="56dp"></LinearLayout>
+        android:layout_height="200dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent">
+
+        <LinearLayout
+            android:id="@+id/linearLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <Button
+                android:id="@+id/useButton"
+                android:layout_width="0dp"
+                android:layout_height="120dp"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:text="@string/use_this_photo"
+                android:textColor="#FFFFFF" />
+
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

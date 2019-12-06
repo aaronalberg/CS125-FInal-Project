@@ -92,6 +92,7 @@ public class WebAPI {
                 Log.i("msg", responseString);
                 try {
                     response = new JSONObject(responseString);
+                    Log.i("bruh", "broooooo what");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }

@@ -12,6 +12,7 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 //import com.squareup.picasso.Picasso;
@@ -76,10 +77,10 @@ public class MainActivity extends AppCompatActivity {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             //File img = new File(currentPhotoPath);
             Bitmap imageBitmap = BitmapFactory.decodeFile(currentPhotoPath);
-
             ImageView thumbnailView = findViewById(R.id.thumbnailView);
-
             thumbnailView.setImageBitmap(imageBitmap);
+            Button openCameraButton = findViewById(R.id.openCameraButton);
+            openCameraButton.setText("Take Photo Again");
             Button useButton = findViewById(R.id.useButton);
             useButton.setOnClickListener(unused -> gooo());
             useButton.setVisibility(View.VISIBLE);

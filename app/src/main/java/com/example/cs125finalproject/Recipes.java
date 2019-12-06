@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -50,6 +51,7 @@ public class Recipes extends Activity {
         try {
             String result = WebAPI.uploadImageToAPI("https://stark-beach-10531.herokuapp.com/upload/",
                     current.getStringExtra("currentPhotoPath")).get("Recipes").toString();
+            Log.i("Finished", "Finished the thingy.");
             TextView recipes = findViewById(R.id.recipes);
             recipes.setText(result);
         } catch (FileNotFoundException e) {

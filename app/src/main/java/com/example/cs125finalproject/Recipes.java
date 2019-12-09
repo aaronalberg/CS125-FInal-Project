@@ -1,41 +1,23 @@
 package com.example.cs125finalproject;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebView;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-
-import com.google.gson.Gson;
 import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.google.gson.reflect.TypeToken;
-
 import org.json.JSONException;
-import org.json.JSONObject;
-
 import java.io.FileNotFoundException;
-import java.sql.SQLOutput;
-import java.sql.Wrapper;
-import java.util.List;
 
 
 public class Recipes extends Activity {
@@ -63,16 +45,21 @@ public class Recipes extends Activity {
 
     }
 
+    @SuppressLint("HandlerLeak")
     public Handler handler = new Handler() {
         @Override
         public void handleMessage(Message msg) {
             if (msg.what == 1) {
+                TextView loadingMessage = findViewById(R.id.loadingMessage);
+                loadingMessage.setVisibility(View.GONE);
                 makeChunks(resultString);
             }
         }
 
 };
     public void clicky() {
+        TextView loadingMessage = findViewById(R.id.loadingMessage);
+        loadingMessage.setText("Loading...");
         backgroundThread();
     }
 
@@ -139,14 +126,22 @@ public class Recipes extends Activity {
             View layout = getLayoutInflater().inflate(R.layout.chunk_recipe, null);
             System.out.println("Before text view");
             TextView recipeName = layout.findViewById(R.id.recipeName);
-            recipeName.setText(recipe.get("title").toString());
+            recipeName.setText(recipe.get("title").toString().replaceAll("\\\\n",""));
             recipeLayout.addView(layout);
             Button recipeLink = findViewById(R.id.recipeLink);
 
-            recipeLink.setOnClickListener(unused -> openWebPage(recipe.get("href").toString()));
+            recipeLink.setOnClickListener(unused -> goToUrl(recipe.get("href").toString()));
+
+            //openWebPage(recipe.get("href").toString())
         }
 
     }
+
+    public void goToUrl(String Url) {
+        System.out.println("URL IS:   " + Url);
+        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Url)));
+    }
+
 
     public void openWebPage(String url) {
         WebView webView = new WebView(this);

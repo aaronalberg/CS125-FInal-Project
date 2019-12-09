@@ -26,13 +26,17 @@
         android:text="Return" />
 
     <TextView
-        android:id="@+id/recipes"
+        android:id="@+id/loadingMessage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorPrimary"
         android:text="No Results"
         android:textColor="#FFF"
         android:textSize="50sp" />
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="40dp" />
 
     <LinearLayout
         android:id="@+id/recipeGroup"

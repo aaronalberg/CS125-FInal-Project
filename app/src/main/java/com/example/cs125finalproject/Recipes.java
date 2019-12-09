@@ -44,7 +44,6 @@ public class Recipes extends Activity {
                     new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
 
-
         generateButton.setOnClickListener(unused -> clicky());
 
 

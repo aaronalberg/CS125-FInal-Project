@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -57,6 +58,9 @@ public class Recipes extends Activity {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
+        LinearLayout recipeLayout = findViewById(R.id.recipeLayout);
+        View recipe = getLayoutInflater().inflate(R.layout.chunk_recipe, recipeLayout, false);
+
         /*
         ImageView tester = findViewById(R.id.tester);
         Bitmap myBitmap = BitmapFactory.decodeFile(current.getStringExtra("currentPhotoPath"));

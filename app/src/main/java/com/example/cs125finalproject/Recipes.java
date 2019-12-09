@@ -1,8 +1,10 @@
 package com.example.cs125finalproject;
 
+import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
@@ -13,6 +15,10 @@ import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -38,6 +44,11 @@ public class Recipes extends Activity {
         Button returnButton = findViewById(R.id.returnButton);
         returnButton.setOnClickListener(unused -> startActivity(new Intent(this, MainActivity.class)));
         Button generateButton = findViewById(R.id.generateButton);
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this,
+                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+        }
 
 
         generateButton.setOnClickListener(unused -> clicky());
@@ -128,7 +139,7 @@ public class Recipes extends Activity {
             TextView recipeName = layout.findViewById(R.id.recipeName);
             recipeName.setText(recipe.get("title").toString().replaceAll("\\\\n",""));
             recipeLayout.addView(layout);
-            Button recipeLink = findViewById(R.id.recipeLink);
+            Button recipeLink = layout.findViewById(R.id.recipeLink);
 
             recipeLink.setOnClickListener(unused -> goToUrl(recipe.get("href").toString()));
 
@@ -137,9 +148,13 @@ public class Recipes extends Activity {
 
     }
 
-    public void goToUrl(String Url) {
-        System.out.println("URL IS:   " + Url);
-        startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(Url)));
+    public void goToUrl(String url) {
+        Uri webpage = Uri.parse(Uri.decode(url.replaceAll("\"","")));
+        Intent intent = new Intent(Intent.ACTION_VIEW, webpage);
+        System.out.println("URL is:   " + url);
+        if (intent.resolveActivity(getPackageManager()) != null) {
+            startActivity(intent);
+        }
     }
 
 

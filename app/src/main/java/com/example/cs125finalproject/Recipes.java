@@ -38,11 +38,7 @@ public class Recipes extends Activity {
         Button returnButton = findViewById(R.id.returnButton);
         returnButton.setOnClickListener(unused -> startActivity(new Intent(this, MainActivity.class)));
         Button generateButton = findViewById(R.id.generateButton);
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-        }
+
 
         generateButton.setOnClickListener(unused -> clicky());
 

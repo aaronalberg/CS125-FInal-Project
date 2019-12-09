@@ -58,8 +58,10 @@ public class Recipes extends Activity {
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
-        LinearLayout recipeLayout = findViewById(R.id.recipeLayout);
+        /* LinearLayout recipeLayout = findViewById(R.id.recipeLayout);
         View recipe = getLayoutInflater().inflate(R.layout.chunk_recipe, recipeLayout, false);
+
+         */
 
         /*
         ImageView tester = findViewById(R.id.tester);

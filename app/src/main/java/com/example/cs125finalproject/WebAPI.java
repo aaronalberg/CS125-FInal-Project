@@ -86,6 +86,8 @@ public class WebAPI {
         RequestParams params = new RequestParams();
         params.put("file", new File(filepath));
 
+        client.setTimeout(20 * 1000);
+
         client.post(url, params, new TextHttpResponseHandler() {
             @Override
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {

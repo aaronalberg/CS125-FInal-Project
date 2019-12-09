@@ -35,9 +35,17 @@
         android:textSize="50sp" />
 
     <LinearLayout
-        android:id="@+id/recipeLayout"
+        android:id="@+id/recipeGroup"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical"></LinearLayout>
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/recipeLayout"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorPrimary"
+            android:orientation="vertical"></LinearLayout>
+    </LinearLayout>
 
 </LinearLayout>

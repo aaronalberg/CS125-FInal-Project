@@ -9,15 +9,9 @@
         android:layout_height="wrap_content"
         android:text="TextView" />
 
-    <TextView
-        android:id="@+id/recipeDescription"
+    <Button
+        android:id="@+id/recipeLink"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="TextView" />
-
-    <TextView
-        android:id="@+id/recipeURL"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="TextView" />
+        android:text="Button" />
 </LinearLayout>

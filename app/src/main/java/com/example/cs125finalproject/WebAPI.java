@@ -93,7 +93,7 @@ public class WebAPI {
             public void onFailure(int statusCode, Header[] headers, String responseString, Throwable throwable) {
                 Log.i("msg", responseString);
                 try {
-                    response = new JSONObject(responseString);
+                    response = new JSONObject(responseString.toString());
                     Log.i("bruh", "broooooo what");
                 } catch (JSONException e) {
                     e.printStackTrace();

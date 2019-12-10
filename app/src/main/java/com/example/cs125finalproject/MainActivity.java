@@ -3,9 +3,12 @@ package com.example.cs125finalproject;
 import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.Matrix;
+import android.media.ExifInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -28,6 +31,7 @@ import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,6 +41,7 @@ public class MainActivity extends AppCompatActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     static final int REQUEST_TAKE_PHOTO = 1;
     private String currentPhotoPath;
+    public static final int GET_FROM_GALLERY = 3;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +62,9 @@ public class MainActivity extends AppCompatActivity {
             ActivityCompat.requestPermissions(this,
                     new String[]{Manifest.permission.CAMERA, android.Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
         }
+        Button uploadButton = findViewById(R.id.uploadButton);
+        uploadButton.setOnClickListener(unused -> startActivityForResult(new Intent(Intent.ACTION_PICK,
+                android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY));
 
         Button useButton = findViewById(R.id.useButton);
         useButton.setBackgroundColor(Color.parseColor("#C2BFBF"));
@@ -73,8 +81,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
-            //File img = new File(currentPhotoPath);
-            Bitmap imageBitmap = BitmapFactory.decodeFile(currentPhotoPath);
+            Bitmap imageBitmap = rotateImage(BitmapFactory.decodeFile(currentPhotoPath), 90);
+
             ImageView thumbnailView = findViewById(R.id.thumbnailView);
             thumbnailView.setImageBitmap(imageBitmap);
             Button openCameraButton = findViewById(R.id.openCameraButton);
@@ -84,10 +92,49 @@ public class MainActivity extends AppCompatActivity {
             useButton.setBackgroundColor(Color.parseColor("#991A22"));
 
         }
+        if (requestCode == GET_FROM_GALLERY && resultCode == RESULT_OK) {
+            Uri selectedImage = data.getData();
+            File file = new File(selectedImage.getPath());
+            currentPhotoPath = getRealPathFromURI(selectedImage);
+            Bitmap bitmap = null;
+            try {
+
+                bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(), selectedImage);
+                ImageView thumbnailView = findViewById(R.id.thumbnailView);
+                thumbnailView.setImageBitmap(bitmap);
+
+                Button useButton = findViewById(R.id.useButton);
+                useButton.setOnClickListener(unused -> gooo());
+                useButton.setBackgroundColor(Color.parseColor("#991A22"));
+
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+        }
     }
 
+    public static Bitmap rotateImage(Bitmap source, float angle) {
+        Matrix matrix = new Matrix();
+        matrix.postRotate(angle);
+        return Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
+                matrix, true);
+    }
 
-
+    public String getRealPathFromURI (Uri contentUri) {
+        String path = null;
+        String[] proj = { MediaStore.MediaColumns.DATA };
+        Cursor cursor = getContentResolver().query(contentUri, proj, null, null, null);
+        if (cursor.moveToFirst()) {
+            int column_index = cursor.getColumnIndexOrThrow(MediaStore.MediaColumns.DATA);
+            path = cursor.getString(column_index);
+        }
+        cursor.close();
+        return path;
+    }
 
     private void dispatchTakePictureIntent() {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);

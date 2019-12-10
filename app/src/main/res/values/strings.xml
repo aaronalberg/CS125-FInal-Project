@@ -7,4 +7,5 @@
     <string name="use_this_photo">Use This Photo</string>
     <string name="to_start_take_a_picture_below">To start: take a picture below.</string>
     <string name="picture_of_fridge">picture of fridge</string>
+    <string name="button_text">OPEN IN BROWSER</string>
 </resources>

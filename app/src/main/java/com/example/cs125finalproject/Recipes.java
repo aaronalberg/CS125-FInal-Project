@@ -37,12 +37,7 @@ public class Recipes extends Activity {
         setContentView(R.layout.recipes);
         Button returnButton = findViewById(R.id.returnButton);
         returnButton.setOnClickListener(unused -> startActivity(new Intent(this, MainActivity.class)));
-        Button generateButton = findViewById(R.id.generateButton);
-
-
-        generateButton.setOnClickListener(unused -> clicky());
-
-
+        clicky();
     }
 
     @SuppressLint("HandlerLeak")
@@ -90,7 +85,7 @@ public class Recipes extends Activity {
     public String generateRecipes() throws JSONException {
         Intent current = getIntent();
         try {
-            String result = WebAPI.uploadImageToAPI("https://stark-beach-10531.herokuapp.com/upload/",
+            String result = WebAPI.uploadImageToAPI("https://stark-beach-10531.herokuapp.com/upload/?numberToShow=4",
                     current.getStringExtra("currentPhotoPath")).get("Recipes").toString();
             Log.i("Finished", "Finished the thingy.");
 
@@ -111,7 +106,7 @@ public class Recipes extends Activity {
             JsonObject recipe = entries.get(i).getAsJsonObject();
             View layout = getLayoutInflater().inflate(R.layout.chunk_recipe, null);
             TextView recipeName = layout.findViewById(R.id.recipeName);
-            recipeName.setText(recipe.get("title").toString().replaceAll("\\\\n",""));
+            recipeName.setText(recipe.get("title").toString().replaceAll("\\\\n","").replaceAll("\"","").replaceAll("&amp",""));
             recipeLayout.addView(layout);
             Button recipeLink = layout.findViewById(R.id.recipeLink);
             recipeLink.setOnClickListener(unused -> goToUrl(recipe.get("href").toString()));

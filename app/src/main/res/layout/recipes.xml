@@ -14,16 +14,11 @@
         app:srcCompat="@android:color/darker_gray" />
 
     <Button
-        android:id="@+id/generateButton"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Generate Recipes" />
-
-    <Button
         android:id="@+id/returnButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Return" />
+        android:text="⬅     Return to home"
+        android:textSize="20sp" />
 
     <TextView
         android:id="@+id/loadingMessage"
@@ -36,7 +31,7 @@
 
     <Space
         android:layout_width="match_parent"
-        android:layout_height="40dp" />
+        android:layout_height="25dp" />
 
     <LinearLayout
         android:id="@+id/recipeGroup"
